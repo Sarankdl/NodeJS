@@ -1,5 +1,10 @@
 const fs = require('fs');
+const http = require('http');
+const path = require('path');
+const url = require('url');
 
+///////////////////////////////  FILES //////////////////////////
+//Blocking, Synchronous way
 const textIn = fs.readFileSync('./txt/input.txt', 'UTF-8');
 console.log(textIn);
 
@@ -7,3 +12,33 @@ const textOut = `This is what we know about Avocado: ${textIn}.\n Created on ${D
 fs.writeFileSync('./txt/output.txt', textOut);
 
 console.log('file written!');
+
+
+//Non-blocking, asynchronous way
+fs.readFile('./txt/start.txt', 'utf-8', (err, data1) => {
+    if(err) return console.log('ERROR!');
+    fs.readFile(`./txt/${data1}.txt`, 'utf-8', (err, data2) => {
+        console.log(data2);
+        fs.writeFile('./txt/final.txt', `${data2}`, 'utf-8', err => {
+            console.log('Your file has been written!');
+        });
+    });
+});
+console.log('Will read this file');
+
+
+///////////////////////////////  SERVERS //////////////////////////
+const server = http.createServer((req, res) => {
+    const pathName = req.url;
+
+    if(pathName === '/' || pathName ==='/overview'){
+        res.end("This is Overview");
+    }
+    else if (pathName === '/products'){
+        res.end("This is Product page!");
+    }
+});
+
+server.listen(3000, '127.0.0.1', () => {
+    console.log('Listening from port 3000');
+});
