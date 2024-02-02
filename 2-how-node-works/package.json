@@ -1,0 +1,11 @@
+{
+  "name": "2-how-node-works",
+  "version": "1.0.0",
+  "description": "How is Node.js working ",
+  "main": "event-loop.js",
+  "scripts": {
+    "start": "nodemon event-loop.js"
+  },
+  "author": "Sara Nikdel",
+  "license": "ISC"
+}
