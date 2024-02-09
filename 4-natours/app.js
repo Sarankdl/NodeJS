@@ -19,13 +19,33 @@ const tours = JSON.parse(
 
 app.get('/api/v1/tours', (req, res) => {
     res.status(200).json({
-        status: 'suceess',
+        status: 'sucess',
         results: tours.length,
         data: {
             tours: tours
         }
     })
 });
+
+app.get('/api/v1/tours/:id', (req, res) => {
+
+    const id = req.params.id * 1;
+    const tour = tours.find( el => el.id === id);
+    if(!tour) {
+        return res.status(404).json({
+            status: 'Failed',
+            message: 'Invalid ID'
+        });
+    }
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tour : tour
+        }
+    })
+});
+
+
 
 app.post('/api/v1/tours', (req, res) => {
 
